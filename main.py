@@ -24,6 +24,8 @@ from ImportData import *
 from GetDates import *
 from GetDaily import *
 from MovingAverage import *
+from Forecasting import *
+from PredictingConfirmed import *
 
 
 # 1. Import CSV data from John Hopkins University and Apple Mobility Data (2)
@@ -39,5 +41,15 @@ print('----- 2 FINISHED SUCCESSFULLY -----')
 # 3. Getting daily increases and moving averages
 print('3. Getting daily increases and moving averages')
 daily_case_increases, daily_case_increase_avgs, daily_case_moving_avgs, daily_deaths_increases, daily_deaths_increase_avgs, daily_deaths_moving_avgs, daily_recovered_increases, daily_recovered_increase_avgs, daily_recovered_moving_avgs,  daily_active_increases, daily_active_increase_avgs, daily_active_moving_avgs = GetDaily(dates, world_cases, total_deaths, total_recovered, total_active)
-MovingAverage(daily_case_moving_avgs, daily_deaths_moving_avgs, daily_recovered_moving_avgs, daily_active_moving_avgs, 10)
+MovingAverage(daily_case_moving_avgs, daily_deaths_moving_avgs, daily_recovered_moving_avgs, daily_active_moving_avgs, window_size=7)
 print('----- 3 FINISHED SUCCESSFULLY -----')
+
+# 4. Future forecasting and Convert integer into daytime for better visualization (5,6)
+print('4. Future Forecasting and Convert integer into daytime for better visualization')
+future_forcast_dates, X_train_confirmed, X_test_confirmed, y_train_confirmed, y_test_confirmed, future_forcast = Forecasting(dates, world_cases, total_deaths, total_recovered)
+print('----- 4 FINISHED SUCCESSFULLY -----')
+
+# 5. Model for predicting # of confirmed cases. (7)
+print('5. Model for predicting # of confirmed cases.')
+PredictingConfirmed(future_forcast_dates, X_train_confirmed, X_test_confirmed, y_train_confirmed, y_test_confirmed, future_forcast)
+print('----- 5 FINISHED SUCCESSFULLY -----')

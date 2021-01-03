@@ -16,9 +16,11 @@ def GetDates(confirmed_cases, confirmed_deaths, confirmed_recovered, latest_data
     confirmed_deaths_US_keys = confirmed_deaths_US.keys()
     apple_mobility_data_keys = apple_mobility_data.keys()
 
-    confirmed = confirmed_cases.iloc[:, 4:-1]
-    deaths = confirmed_deaths.iloc[:, 4:-1]
-    recoveries = confirmed_recovered.iloc[:, 4:-1]
+    cols = confirmed_cases.keys()
+
+    confirmed = confirmed_cases.loc[:, cols[4]:cols[-1]]
+    deaths = confirmed_deaths.loc[:, cols[4]:cols[-1]]
+    recoveries = confirmed_recovered.loc[:, cols[4]:cols[-1]]
 
     dates = confirmed.keys()
 

@@ -16,3 +16,4 @@ def MovingAverage(daily_case_moving_avgs, daily_deaths_moving_avgs, daily_recove
         print('Recovered: ' , daily_recovered_moving_avgs[i])
         print('Active: ', daily_active_moving_avgs[i])
         print('------------')
+

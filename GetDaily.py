@@ -24,7 +24,7 @@ def GetDaily(dates, world_cases, total_deaths, total_recovered, total_active):
     daily_active_increase_avgs = []
     daily_active_moving_avgs = []
 
-    for date in range(len(dates) - 1 ):
+    for date in range(len(dates) - 1):
 
         # date_obj = datetime.datetime.strptime(date, '%m/%d/%y')
         # yesterday = date_obj.date() - datetime.timedelta(days=1)
