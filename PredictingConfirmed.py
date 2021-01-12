@@ -9,20 +9,22 @@ import warnings
 warnings.filterwarnings("ignore")
 import numpy as np
 
-def PredictingConfirmed(future_forcast_dates, X_train_confirmed, X_test_confirmed, y_train_confirmed, y_test_confirmed, future_forcast):
+from daily_increase2 import *
 
-    kernel = ['poly', 'sigmoid', 'rbf']
-    c = [0.01, 0.1, 1, 10]
-    gamma = [0.01, 0.1, 1]
-    epsilon = [0.01, 0.1, 1]
-    shrinking = [True, False]
-    svm_grid = {'kernel': kernel, 'C': c, 'gamma': gamma, 'epsilon': epsilon, 'shrinking': shrinking}
-    svm = SVR(kernel='poly', degree=3)
+def PredictingConfirmed(future_forcast_dates, X_train_confirmed, X_test_confirmed, y_train_confirmed, y_test_confirmed, future_forcast, world_cases, total_deaths, total_recovered, total_active):
 
-    svm_search = RandomizedSearchCV(svm, svm_grid, scoring='neg_mean_squared_error', cv=3, return_train_score=True,
-                                    n_jobs=-1, n_iter=30, verbose=1)
+    # kernel = ['poly', 'sigmoid', 'rbf']
+    # c = [0.01, 0.1, 1, 10]
+    # gamma = [0.01, 0.1, 1]
+    # epsilon = [0.01, 0.1, 1]
+    # shrinking = [True, False]
+    # svm_grid = {'kernel': kernel, 'C': c, 'gamma': gamma, 'epsilon': epsilon, 'shrinking': shrinking}
+    # svm = SVR(kernel='poly', degree=3)
 
-    svm_search.fit(X_train_confirmed, y_train_confirmed.ravel()) # this is where the error is
+    # svm_search = RandomizedSearchCV(svm, svm_grid, scoring='neg_mean_squared_error', cv=3, return_train_score=True, n_jobs=-1, n_iter=30, verbose=1)
+    #
+    # svm_search.fit(X_train_confirmed, y_train_confirmed.ravel()) # this is where the error is
+    #GridSearchCV
 
     #svm_search.best_params_
 
@@ -93,4 +95,26 @@ def PredictingConfirmed(future_forcast_dates, X_train_confirmed, X_test_confirme
     plt.plot(test_bayesian_pred)
     plt.legend(['Test Data', 'Bayesian Ridge Polynomial Predictions'])
     plt.show()
+
+    # window size
+    window = 7
+
+    # confirmed cases
+    world_daily_increase = daily_increase(world_cases)
+    world_confirmed_avg = moving_average(world_cases, window)
+    world_daily_increase_avg = moving_average(world_daily_increase, window)
+    # deaths
+    world_daily_death = daily_increase(total_deaths)
+    world_death_avg = moving_average(total_deaths, window)
+    world_daily_death_avg = moving_average(world_daily_death, window)
+
+    # recoveries
+    world_daily_recovery = daily_increase(total_recovered)
+    world_recovery_avg = moving_average(total_recovered, window)
+    world_daily_recovery_avg = moving_average(world_daily_recovery, window)
+
+    # active
+    world_active_avg = moving_average(total_active, window)
+
+    return world_daily_increase, world_confirmed_avg, world_daily_increase_avg, world_daily_death, world_death_avg, world_daily_death_avg, world_daily_recovery, world_recovery_avg, world_daily_recovery_avg, world_active_avg, window
 

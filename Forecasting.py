@@ -43,6 +43,6 @@ def Forecasting(dates, world_cases, total_deaths, total_recovered):
     print("y_test_confirmed: ", y_test_confirmed)
     print("-----------------------------------------------")
 
-    return future_forcast_dates, X_train_confirmed, X_test_confirmed, y_train_confirmed, y_test_confirmed, future_forcast
+    return future_forcast_dates, X_train_confirmed, X_test_confirmed, y_train_confirmed, y_test_confirmed, future_forcast, adjusted_dates
 
 

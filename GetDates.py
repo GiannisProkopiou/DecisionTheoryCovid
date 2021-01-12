@@ -31,6 +31,7 @@ def GetDates(confirmed_cases, confirmed_deaths, confirmed_recovered, latest_data
     total_recovered = []
     total_active = []
 
+
     for date in dates:
 
         confirmed_sum = confirmed[date].sum()
